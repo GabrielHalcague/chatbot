@@ -1,0 +1,288 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "name": "Empty",
+    "description": "",
+    "id": "A79tBe"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720",
+        "comment": "This trigger runs when a conversation update activity is sent to the bot. This indicates a user or bot being added or removed from a conversation."
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "518944",
+            "name": "Loop: for each item",
+            "comment": "For each member added to the conversation."
+          },
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else",
+                "comment": "Checks that that member added ID does not match the bot ID. This prevents the greeting message from being sent when the bot is added to a conversation."
+              },
+              "condition": "=string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "lMSD9T",
+                    "name": "Send a response"
+                  },
+                  "activity": "${SendActivity_lMSD9T()}"
+                }
+              ]
+            }
+          ],
+          "value": "dialog.foreach.value",
+          "index": "dialog.foreach.index"
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "S2Mf7d"
+          },
+          "activityProcessed": true,
+          "dialog": "MenuPrincipal"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "uQK4sY",
+        "name": "InformacionDeTarjetas"
+      },
+      "intent": "InformacionDeTarjetas",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "3dwGxL"
+          },
+          "activityProcessed": true,
+          "dialog": "SolicitarTarjeta"
+        }
+      ],
+      "priority": 0
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "UyjwMO",
+        "name": "AbrirCajaDeAhorro"
+      },
+      "intent": "AbrirCajaDeAhorro",
+      "actions": [
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "eGn1gz"
+          },
+          "activity": "${SendActivity_eGn1gz()}"
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "qC4y6R"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_qC4y6R()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "user.email"
+        },
+        {
+          "$kind": "Microsoft.NumberInput",
+          "$designer": {
+            "id": "vmhY7u"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${NumberInput_Prompt_vmhY7u()}",
+          "unrecognizedPrompt": "",
+          "property": "user.DNI",
+          "validations": []
+        },
+        {
+          "$kind": "Microsoft.TextInput",
+          "$designer": {
+            "id": "RguPou"
+          },
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${TextInput_Prompt_RguPou()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "property": "user.NombreCompleto"
+        },
+        {
+          "$kind": "Microsoft.ChoiceInput",
+          "$designer": {
+            "id": "MlYiFi"
+          },
+          "defaultLocale": "en-us",
+          "disabled": false,
+          "maxTurnCount": 3,
+          "alwaysPrompt": false,
+          "allowInterruptions": false,
+          "prompt": "${ChoiceInput_Prompt_MlYiFi()}",
+          "unrecognizedPrompt": "",
+          "invalidPrompt": "",
+          "defaultValueResponse": "",
+          "choiceOptions": {
+            "includeNumbers": true
+          },
+          "property": "user.confirmacionApertura",
+          "choices": [
+            "si",
+            "no"
+          ]
+        },
+        {
+          "$kind": "Microsoft.SwitchCondition",
+          "$designer": {
+            "id": "HzCyLF"
+          },
+          "condition": "=user.confirmacionApertura",
+          "cases": [
+            {
+              "value": "si",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "klgTIq"
+                  },
+                  "activity": "${SendActivity_klgTIq()}"
+                }
+              ]
+            },
+            {
+              "value": "no",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "gzpD1W"
+                  },
+                  "activity": "${SendActivity_gzpD1W()}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "IaIqFE"
+          },
+          "activityProcessed": true,
+          "dialog": "MenuPrincipal"
+        }
+      ],
+      "entities": []
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "W2xJ5V",
+        "name": "hola"
+      },
+      "intent": "hola",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "UNw2uo"
+          },
+          "activityProcessed": true,
+          "dialog": "MenuPrincipal"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Z8LuhF",
+        "name": "menu"
+      },
+      "intent": "menu",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "u1ml2F"
+          },
+          "activityProcessed": true,
+          "dialog": "MenuPrincipal"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "WxwaMX",
+        "name": "informacionDolar"
+      },
+      "intent": "informacionDolar",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "HAolcY"
+          },
+          "activityProcessed": true,
+          "dialog": "InformacionDolar"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnIntent",
+      "$designer": {
+        "id": "Iekjfq",
+        "name": "denunciar"
+      },
+      "intent": "denunciar",
+      "actions": [
+        {
+          "$kind": "Microsoft.BeginDialog",
+          "$designer": {
+            "id": "6Q5MC3"
+          },
+          "activityProcessed": true,
+          "dialog": "denunciarTarjetas"
+        }
+      ]
+    }
+  ],
+  "generator": "Empty.lg",
+  "id": "Empty",
+  "recognizer": {
+    "$kind": "Microsoft.CluRecognizer",
+    "projectName": "proyectoBanco",
+    "endpoint": "https://botbanco2.cognitiveservices.azure.com/",
+    "endpointKey": "452f80e243924a9589be4cb873a6d786",
+    "deploymentName": "botDesplegado"
+  }
+}
